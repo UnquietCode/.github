@@ -1,0 +1,6 @@
+{
+    "name": "Create Branch",
+    "description": "Creates a bare branch suitable for storing issue PDFs.",
+    "iconName": "octicon smiley",
+    "categories": ["Automation", "SDLC"]
+}
