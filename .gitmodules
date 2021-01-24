@@ -1,3 +1,4 @@
 [submodule "issue-printer"]
 	path = issue-printer
 	url = git@github.com:UnquietCode/issue-printer.git
+	branch = master
