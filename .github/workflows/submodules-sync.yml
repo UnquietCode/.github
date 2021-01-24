@@ -1,0 +1,41 @@
+name: Submodules Sync
+
+on:
+  workflow_dispatch
+
+jobs:
+  sync-workflow-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout-repository
+        name: check out repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          ssh-key: "${{ secrets.submodule_deploy_key }}"
+          persist-credentials: false
+      
+      - id: configure-user
+        name: configure git user
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.password "${{ secrets.GITHUB_TOKEN }}"
+          git remote add github "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/UnquietCode/.github.git"
+          #echo "GIT_USER=${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+
+      - id: copy-templates
+        name: copy all of the template files
+        run: |
+          MODULES=$(git submodule foreach -q 'echo $name')
+
+          for module in "${MODULES[@]}"; do
+             mkdir -p "./workflow-templates/$module" 
+             cp -r "./$module/workflow-templates" "./workflow-templates/$module"
+          done
+
+      - name: commit and push
+        run: |
+          git add .
+          git commit -m "submodule sync"
+          git push github main:main
