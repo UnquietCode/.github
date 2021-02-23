@@ -1,0 +1,6 @@
+{
+    "name": "Docker Deploy",
+    "description": "Deploy a docker image automatically upon release.",
+    "iconName": "octicon smiley",
+    "categories": ["Automation", "SDLC"]
+}
