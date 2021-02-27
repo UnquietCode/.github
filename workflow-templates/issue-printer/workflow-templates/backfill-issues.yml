@@ -75,8 +75,8 @@ jobs:
         name: convert the issue JSON to markdown
         uses: UnquietCode/issue-printer/convert-issue-to-markdown@master
         with:
-          content: "${{ toJSON(fromJSON(needs.get-all-issues.outputs.issue_data)[matrix.issue]) }}"
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          content: ${{ toJSON(fromJSON(needs.get-all-issues.outputs.issue_data)[matrix.issue]) }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - id: unpack-zip
         name: unpack the created zip file
